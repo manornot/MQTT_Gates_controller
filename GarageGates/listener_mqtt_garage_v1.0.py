@@ -6,7 +6,7 @@ import paho.mqtt.publish
 import threading
 import sys
 from queue import Queue
-broker = 'vtvm.edi.lv'
+broker = 
 from garage_fsm import garage_gates_FSM
 available_commands = [b'open',b'stop',b'close']
 debug_pins_state = '11111'
