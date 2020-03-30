@@ -62,7 +62,7 @@ def on_message(client, userdata, message):
         if DEBUG: print('its true')
         servetor_ai(userdata.get('gates'),message.payload)
 
-def nop():
+def nsc():
     if DEBUG: print('DEBUG','i have no idea what do you want from me')
     sys.stdout.flush()
     pass
