@@ -42,7 +42,8 @@ def state_checker(client,gates):
 
 
 def main(gates):
-    clnt = client.Client(client_id = 'garagekeeper')
+    client_data = {'gates':gates}
+    clnt = client.Client(client_id = 'garagekeeper',userdata = client_data)
     clnt.on_connect = on_connect
     clnt.on_message = on_message
     clnt.connect(host = broker,port = 1883)
@@ -89,18 +90,18 @@ def init_pins(CL,OP,K,G,T,_open,_close,_stop):
     gpio.setup(_stop,gpio.OUT)
     gpio.output(_stop,0)
 
-def open_command():
+def open_command(gate):
     paho.mqtt.publish.single("garage/response",'Roger Roger! Execute openning protocol!',hostname=broker)
     time.sleep(1)
-    if gates.state == 'close' or gates.state == 'stop':
+    if gate.state == 'close' or gate.state == 'stop':
         press['open']()
-    elif gates.state == 'closing':
+    elif gate.state == 'closing':
         press['stop']()
         time.sleep(1)
         press['open']()
 
-def close_command():    
-    if gates.state == 'open' or gates.state == 'stop':
+def close_command(gate):    
+    if gate.state == 'open' or gate.state == 'stop':
         press['close']()
     elif gates.state == 'opening':
         press['stop']()
