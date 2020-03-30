@@ -111,7 +111,6 @@ def state_checker(clnt,gates):
                 prev_state = state
                 sys.stdout.flush()
             time.sleep(0.1)
-                    if DEBUG: print('DEBUG','boop')
         else:
             pin_states = np.append(pin_states,read_pin()[3])
             reads_counter+=1
