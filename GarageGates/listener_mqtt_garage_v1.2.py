@@ -70,7 +70,7 @@ def nop():
 def servetor_ai(gate,msg):
     #new_command = 0
     print('servetor is online')
-    print('command received')
+    print('command received = ',msg)
     servetor.get(msg,nsc)(gate) 
     #time.sleep(0.1)
             
