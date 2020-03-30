@@ -100,7 +100,6 @@ def state_checker(clnt,gates):
             pins,pin_states = filter_pins(pin_states,win,win_len,round_dig)
             state_fun = state_fun(np.rint(pins))
             state = gates.state
-            if DEBUG: print('DEBUG',gates.state,gates.prev_state)
             #    with open('pin_log.csv','a') as f:
             #        writer = csv.writer(f)
             #        writer.writerow([read_pin()[0:4],time.time()])

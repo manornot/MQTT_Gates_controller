@@ -32,12 +32,6 @@ def state_checker(client,gates):
         state_fun = state_fun(pins)
         state = gates.state
         if(state == prev_state):
-            _counter+=1
-            if DEBUG: 
-                print('DEBUG',_counter)
-                if(_counter%1000==0):
-                    client.publish("garage/check","im ok too " + str(_counter))
-                    time.sleep(0.1)
             pass
         else:
             client.publish("garage/state",str(state))
