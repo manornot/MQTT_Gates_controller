@@ -12,7 +12,7 @@ from fsm import gates_FSM
 from filt_func import *
 from queue import Queue
 from smooth import *
-DEBUG = True
+DEBUG = False
 broker = 
 gates = gates_FSM()
 available_commands = [b'open',b'stop',b'close']
