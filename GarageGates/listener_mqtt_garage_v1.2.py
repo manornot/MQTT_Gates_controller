@@ -91,8 +91,9 @@ def init_pins(CL,OP,K,G,T,_open,_close,_stop):
     gpio.output(_stop,0)
 
 def open_command(gate):
-    paho.mqtt.publish.single("garage/response",'Roger Roger! Execute openning protocol!',hostname=broker)
-    time.sleep(1)
+    #paho.mqtt.publish.single("garage/response",'Roger Roger! Execute openning protocol!',hostname=broker)
+    #time.sleep(1)
+    if DEBUG: print('DEBUG','Open this fucking gates! motherfucker!')
     if gate.state == 'close' or gate.state == 'stop':
         press['open']()
     elif gate.state == 'closing':
