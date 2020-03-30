@@ -46,6 +46,7 @@ def main(gates):
     clnt.on_connect = on_connect
     clnt.on_message = on_message
     clnt.connect(host = broker,port = 1883)
+    clnt.loop_start()
     state_checker(clnt,gates)
 
 def on_connect(client, userdata, flags, rc):
