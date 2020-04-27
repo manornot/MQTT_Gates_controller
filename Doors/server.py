@@ -14,6 +14,7 @@ def on_connect(client, userdata, flags, rc):
             user.__user = user.user
             print(f'{user.request_topic}')
             client.subscribe(user.request_topic)
+    client.publish('edi/user/44e56742/B/3/319', str('i am in'))
 
 
 def on_message(client, userdata, message):
