@@ -21,7 +21,7 @@ def on_message(client, userdata, message):
     print(f'topic = {message.topic} payload = {message.payload}')
     door = Doors
     print('1')
-    *_, building, floor, room = message.payload.split('/')
+    *_, building, floor, room = message.topic.split('/')
     print('2')
     print(f'{building}, {floor}, {room}')
 
