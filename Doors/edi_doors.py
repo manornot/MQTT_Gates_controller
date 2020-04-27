@@ -45,8 +45,8 @@ class Doors():
         self.__status_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.status}'
 
     @property
-    def request_topic(self, tag):
-        self.__request_topic = f'edi/user/{tag}/{self.building}/{self.floor}/{self.room}'
+    def request_topic(self):
+        self.__request_topic = f'edi/user/{self.__user}/{self.building}/{self.floor}/{self.room}'
         return self.__request_topic
 
     def params(self):

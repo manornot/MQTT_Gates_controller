@@ -11,7 +11,8 @@ def on_connect(client, userdata, flags, rc):
         for door in user.__rooms:
             print(f'door = {door}, uuid = {user.user}')
             user.room = door
-            print(f'{user.request_topic(user.user)}')
+            user.__user = user.user
+            print(f'{user.request_topic}')
             client.subscribe(user.request_topic(user.user))
 
 
