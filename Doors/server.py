@@ -12,7 +12,7 @@ def on_connect(client, userdata, flags, rc):
             #print(f'door = {door}, uuid = {user.user}')
             user.room = door
             user.__user = user.user
-            # print(f'{user.request_topic}')
+            print(f'{user.request_topic}')
             client.subscribe(user.request_topic)
 
 
