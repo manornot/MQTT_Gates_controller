@@ -2,9 +2,9 @@ import time
 import numpy as np
 import RPi.GPIO as gpio
 import sys
+DEBUG = False
 
 broker = 'vtvm.edi.lv'
-DEBUG = True
 available_commands = [b'open']
 room_number = 319
 building = 'B'

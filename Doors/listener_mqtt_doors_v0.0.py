@@ -10,7 +10,7 @@ from edi_doors import Doors
 import binascii
 import sys
 import Adafruit_PN532 as PN532
-DEBUG = True
+DEBUG = False
 
 
 def on_connect(client, userdata, flags, rc):
@@ -93,7 +93,8 @@ while True:
         print('Read block 4: 0x{0}'.format(binascii.hexlify(data[:4])))
     uuid = str('{0}'.format(binascii.hexlify(uid)))[2:-1]
     door.request_open(uuid)
-    # print(f'edi/user/{uuid}/{door.request_topic}')
+    if DEBUG:
+        print(f'edi/user/{uuid}/{door.request_topic}')
     uid_old, uid_new = uid, uid
     while uid_old == uid_new:
         uid_new = pn532.read_passive_target()
