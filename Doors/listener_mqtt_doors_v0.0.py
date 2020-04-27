@@ -14,9 +14,10 @@ DEBUG = True
 
 
 def on_connect(client, userdata, flags, rc):
+    print(userdata)
     if rc == 0:
         print("connected OK Returned code=", rc)
-        client.subscribe(topic=userdata.command_topic)
+        client.subscribe(userdata.command_topic)
     else:
         print("Bad connection Returned code=", rc)
 
@@ -81,7 +82,7 @@ while True:
         continue
     print('Read block 4: 0x{0}'.format(binascii.hexlify(data[:4])))
     uuid = str('{0}'.format(binascii.hexlify(uid)))[2:-1]
-    door.open(uuid)
+    door.request_open(uuid)
     # print(f'edi/user/{uuid}/{door.request_topic}')
     uid_old, uid_new = uid, uid
     while uid_old == uid_new:

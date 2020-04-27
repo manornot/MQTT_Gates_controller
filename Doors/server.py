@@ -51,7 +51,7 @@ server = clnt.Client(client_id='server')
 server.on_connect = on_connect
 server.on_message = on_message
 server.user_data_set(to_subscribe)
-server.connect(host='vtvm.edi.lv', port=1883)
+server.connect(host='localhost', port=1883)
 
 server.loop_forever()
 
