@@ -9,8 +9,8 @@ def on_connect(client, userdata, flags, rc):
     for user in userdata:
         for door in user.__rooms:
             user.room = door
-            client.subscribe(user.request_topic(user.user))
             print(user.request_topic(user.user))
+            client.subscribe(user.request_topic(user.user))
 
 
 def on_message(client, userdata, message):
