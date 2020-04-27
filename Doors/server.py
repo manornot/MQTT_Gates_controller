@@ -9,6 +9,7 @@ def on_connect(client, userdata, flags, rc):
         for door in user.__rooms:
             user.room = door
             client.subscribe(user.request_topic)
+            print(user.request_topic)
 
 
 def on_message(client, userdata, message):
@@ -34,7 +35,6 @@ for line in read_data:
     door.building = building
     door.floor = floor
     door.__rooms = rooms
-    door.request_topic = ''
     to_subscribe.append(door)
 
 server = clnt.Client(client_id='server')
