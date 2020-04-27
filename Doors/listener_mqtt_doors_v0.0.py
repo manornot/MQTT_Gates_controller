@@ -16,7 +16,7 @@ DEBUG = True
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("connected OK Returned code=", rc)
-        client.subscribe(topic=userdata.get('door').command_topic)
+        client.subscribe(topic=userdata.command_topic)
     else:
         print("Bad connection Returned code=", rc)
 
@@ -36,7 +36,6 @@ def init(door):
     door.port = 1883
     door.command_topic = 'command'
     door.status_topic = 'status'
-    door.request_topic = ''
 
     door.mqtt_client.user_data_set({'door': door})
     door.mqtt_client.on_connect = on_connect

@@ -36,10 +36,12 @@ class Doors():
     def user(self, uuid):
         self.__user = uuid
 
+    @property
     def command_topic(self):
         self.__command_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.command}'
         return self.__command_topic
 
+    @property
     def status_topic(self):
         self.__status_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.status}'
 
