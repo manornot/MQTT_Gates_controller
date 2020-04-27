@@ -37,7 +37,7 @@ def init(door):
     door.command = 'command'
     door.status = 'status'
 
-    door.mqtt_client.user_data_set({'door': door})
+    door.mqtt_client.user_data_set(door)
     door.mqtt_client.on_connect = on_connect
     door.mqtt_client.on_message = on_message
     #door.mqtt_client.username_pw_set(username='jura', password='qweasdzxc')
