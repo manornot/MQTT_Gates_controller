@@ -11,9 +11,9 @@ class Doors():
         self.floor = floor
         self.building = building
         self.id = str(self.room)+str(building)
-        self.__command_topic = f'edi/{building}/{floor}/{room}/{command_topic}'
-        self.__status_topic = f'edi/{building}/{floor}/{room}/{status_topic}'
-        self.__request_topic = f'{building}/{floor}/{room}/'
+        self.__command_topic = ''
+        self.__status_topic = ''
+        self.__request_topic = ''
         self.userdata = {}
         self.host = host
         self.port = port
