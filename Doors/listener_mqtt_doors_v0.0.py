@@ -80,5 +80,9 @@ while True:
     print('Read block 4: 0x{0}'.format(binascii.hexlify(data[:4])))
 
     door.open(uid)
-    while data[:4] == pn532.mifare_classic_read_block(4)[:4]:
+    uid_old = uid
+    while uid_old == uid_new:
+        uid_new = pn532.read_passive_target()
+        if uid is None:
+            break
         pass
