@@ -20,8 +20,11 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, message):
     print(f'topic = {message.topic} payload = {message.payload}')
     door = Doors
+    print('1')
     *_, building, floor, room = '/'.split(message.topic)
+    print('2')
     print(f'{building}, {floor}, {room}')
+
     door.building = building
     door.floor = floor
     door.room = room
