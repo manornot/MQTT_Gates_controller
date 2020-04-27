@@ -21,7 +21,7 @@ class Doors():
         self.available_commands = {b'open': self.open}
 
     def open(self, tag):
-        self.mqtt_client.publish(self.publish_request+str(tag), str('open'))
+        self.mqtt_client.publish(self.request_topic+str(tag), str('open'))
 
     @property
     def command_topic(self):
