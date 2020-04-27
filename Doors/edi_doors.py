@@ -37,13 +37,13 @@ class Doors():
 
     @property
     def command_topic(self):
-        #self.__command_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.command}'
-        return self.__command_topic
-
-    @command_topic.setter
-    def command_topic(self):
         self.__command_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.command}'
         return self.__command_topic
+
+    # @command_topic.setter
+    # def command_topic(self):
+    #    self.__command_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.command}'
+    #    return self.__command_topic
 
     @property
     def status_topic(self):
@@ -68,7 +68,7 @@ class Doors():
 
 
 # door = Doors(319, 3, 'B', 'vtvm.edi.lv', 1883, 'command', 'status')
-# door = Doors()
+door = Doors()
 # door.room = 319
 # door.floor = 3
 # door.building = 'B'
@@ -76,4 +76,10 @@ class Doors():
 # door.port = 1883
 # door.command_topic = 'command'
 # door.status_topic = 'status'
+door.building = 'B'
+door.floor = 3
+door.room = 319
+door.command = 'command'
+print(f'publishing to {door.command_topic}')
+#client.publish(door.command_topic, str('open'))
 # print(door)
