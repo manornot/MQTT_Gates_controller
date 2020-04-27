@@ -9,7 +9,7 @@
 from edi_doors import Doors
 import binascii
 import sys
-#import Adafruit_PN532 as PN532
+import Adafruit_PN532 as PN532
 DEBUG = True
 
 
@@ -36,10 +36,11 @@ def init(door):
     door.port = 1883
     door.command_topic = 'command'
     door.status_topic = 'status'
+
     door.mqtt_client.user_data_set({'door': door})
     door.mqtt_client.on_connect = on_connect
     door.mqtt_client.on_message = on_message
-    door.mqtt_client.username_pw_set(username='jura', password='qweasdzxc')
+    #door.mqtt_client.username_pw_set(username='jura', password='qweasdzxc')
     door.init()
 
 
@@ -80,6 +81,7 @@ while True:
     print('Read block 4: 0x{0}'.format(binascii.hexlify(data[:4])))
 
     door.open(uid)
+    print(door.publish_request)
     uid_old, uid_new = uid, uid
     while uid_old == uid_new:
         uid_new = pn532.read_passive_target()

@@ -13,6 +13,7 @@ class Doors():
         self.id = str(self.room)+str(building)
         self.__command_topic = f'edi/{building}/{floor}/{room}/{command_topic}'
         self.__status_topic = f'edi/{building}/{floor}/{room}/{status_topic}'
+        self.publish_request = f'edi/{building}/{floor}/{room}/'
         self.userdata = {}
         self.host = host
         self.port = port
@@ -20,7 +21,7 @@ class Doors():
         self.available_commands = {b'open': self.open}
 
     def open(self, tag):
-        self.mqtt_client.publish(f'edi/{tag}/{self.room}', str('open'))
+        self.mqtt_client.publish(self.publish_request+str(tag), str('open'))
 
     @property
     def command_topic(self):
