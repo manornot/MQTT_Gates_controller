@@ -13,10 +13,11 @@ def on_connect(client, userdata, flags, rc):
             user.room = door
             user.__user = user.user
             print(f'{user.request_topic}')
-            client.subscribe(user.request_topic(user.user))
+            client.subscribe(user.request_topic)
 
 
 def on_message(client, userdata, message):
+    print(f'topic = {message.topic} payload = {message.payload}')
     door = Doors
     *_, building, floor, room = '/'.split(message.topic)
     door.building = building
