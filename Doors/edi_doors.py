@@ -19,8 +19,8 @@ class Doors():
         self.mqtt_client = client.Client()
         self.available_commands = {b'open': self.open}
 
-    def open(self):
-        print('open the doors')
+    def open(self, tag):
+        self.mqtt_client.publish(f'edi/{tag}/{self.room}', str('open'))
 
     @property
     def command_topic(self):

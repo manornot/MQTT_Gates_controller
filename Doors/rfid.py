@@ -53,8 +53,7 @@ while True:
         print('Failed to read block 4!')
         continue
     # Note that 16 bytes are returned, so only show the first 4 bytes for the block.
-    #print('Read block 4: 0x{0}'.format(binascii.hexlify(data)))
-    print(data)
+    print('Read block 4: 0x{0}'.format(binascii.hexlify(data[:4])))
     # Example of writing data to block 4.  This is commented by default to
     # prevent accidentally writing a card.
     # Set first 4 bytes of block to 0xFEEDBEEF.

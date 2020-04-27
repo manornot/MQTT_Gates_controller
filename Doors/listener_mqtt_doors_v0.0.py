@@ -79,6 +79,6 @@ while True:
         continue
     print('Read block 4: 0x{0}'.format(binascii.hexlify(data[:4])))
 
-    door.mqtt_client.publish(door.command_topic)
+    door.open(uid)
     while data[:4] == pn532.mifare_classic_read_block(4)[:4]:
         pass
