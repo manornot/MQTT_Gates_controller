@@ -5,6 +5,7 @@ from csv import reader
 
 
 def on_connect(client, userdata, flags, rc):
+    print(userdata)
     for user in userdata:
         for door in user.__rooms:
             user.room = door
@@ -23,7 +24,7 @@ def on_message(client, userdata, message):
 
 
 read_data = []
-with open('D:/Dropbox/Ju\EDI/Autodrive/InfraStructure/GarageDoorController/mqtt_listener/Doors/access.csv') as f:
+with open('access.csv') as f:
     for row in reader(f):
         read_data.append(row)
 to_subscribe = []
@@ -38,8 +39,10 @@ for line in read_data:
     to_subscribe.append(door)
 
 server = clnt.Client(client_id='server')
+server.on_connect = on_connect
+server.on_message = on_message
 server.user_data_set(to_subscribe)
-server.connect(host='vtvm.edi.lv')
+server.connect(host='vtvm.edi.lv', port=1883)
 
 server.loop_forever()
 
