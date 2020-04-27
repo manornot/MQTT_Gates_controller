@@ -23,7 +23,7 @@ class Doors():
         self.command = ''
         self.status = ''
 
-    def open(self, tag):
+    def request_open(self, tag):
         f'publish to edi/user/{str(tag)}/{self.request_topic}'
         self.mqtt_client.publish(self.request_topic(tag), str('open'))
 
