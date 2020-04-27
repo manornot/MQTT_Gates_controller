@@ -1,6 +1,7 @@
 import paho.mqtt.client as client
 import paho.mqtt.publish
 import os
+DEBUG = False
 
 
 class Doors():
@@ -24,12 +25,14 @@ class Doors():
         self.status = ''
 
     def request_open(self, tag):
-        f'publish to edi/user/{str(tag)}/{self.request_topic}'
+        if DEBUG:
+            print(f'publish to edi/user/{str(tag)}/{self.request_topic}')
         self.__user = tag
         self.mqtt_client.publish(self.request_topic, str('open'))
 
     def open(self):
-        print(f'AAAAAAAAAAAAAAAAA i am fcking done')
+        if DEBUG:
+            print(f'AAAAAAAAAAAAAAAAA i am fcking done')
         pass
 
     @property

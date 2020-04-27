@@ -14,12 +14,15 @@ DEBUG = True
 
 
 def on_connect(client, userdata, flags, rc):
-    print(userdata)
+    if DEBUG:
+        print(userdata)
     if rc == 0:
-        print("connected OK Returned code=", rc)
+        if DEBUG:
+            print("connected OK Returned code=", rc)
         client.subscribe(userdata.command_topic)
     else:
-        print("Bad connection Returned code=", rc)
+        if DEBUG:
+            print("Bad connection Returned code=", rc)
 
 
 def on_message(client, userdata, message):
@@ -47,7 +50,8 @@ def init(door):
 
 door = Doors()
 init(door)
-print(door)
+if DEBUG:
+    print(door)
 door.mqtt_client.loop_start()
 
 
@@ -64,23 +68,29 @@ SCLK = 11
 pn532 = PN532.PN532(cs=CS, sclk=SCLK, mosi=MOSI, miso=MISO)
 pn532.begin()
 ic, ver, rev, support = pn532.get_firmware_version()
-print('Found PN532 with firmware version: {0}.{1}'.format(ver, rev))
+if DEBUG:
+    print('Found PN532 with firmware version: {0}.{1}'.format(ver, rev))
 pn532.SAM_configuration()
-print('Waiting for MiFare card...')
+if DEBUG:
+    print('Waiting for MiFare card...')
 while True:
     uid = pn532.read_passive_target()
     if uid is None:
         continue
-    print('Found card with UID: 0x{0}'.format(binascii.hexlify(uid)))
+    if DEBUG:
+        print('Found card with UID: 0x{0}'.format(binascii.hexlify(uid)))
     if not pn532.mifare_classic_authenticate_block(uid, 4, PN532.MIFARE_CMD_AUTH_B,
                                                    [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]):
-        print('Failed to authenticate block 4!')
+        if DEBUG:
+            print('Failed to authenticate block 4!')
         continue
     data = pn532.mifare_classic_read_block(4)
     if data is None:
-        print('Failed to read block 4!')
+        if DEBUG:
+            print('Failed to read block 4!')
         continue
-    print('Read block 4: 0x{0}'.format(binascii.hexlify(data[:4])))
+    if DEBUG:
+        print('Read block 4: 0x{0}'.format(binascii.hexlify(data[:4])))
     uuid = str('{0}'.format(binascii.hexlify(uid)))[2:-1]
     door.request_open(uuid)
     # print(f'edi/user/{uuid}/{door.request_topic}')

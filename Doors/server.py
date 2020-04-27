@@ -2,6 +2,7 @@ import paho.mqtt.client as clnt
 import paho.mqtt.publish
 from edi_doors import Doors
 from csv import reader
+DEBUG = False
 
 
 def on_connect(client, userdata, flags, rc):
@@ -13,21 +14,25 @@ def on_connect(client, userdata, flags, rc):
             user.room = door
             user.__user = user.user
             tpk = user.request_topic
-            print(tpk)
+            if DEBUG:
+                print(tpk)
             client.subscribe(tpk)
 
 
 def on_message(client, userdata, message):
-    print(f'topic = {message.topic} payload = {message.payload}')
+    if DEBUG:
+        print(f'topic = {message.topic} payload = {message.payload}')
     door = Doors()
     *_, building, floor, room = message.topic.split('/')
-    print(f'{building}, {floor}, {room}')
+    if DEBUG:
+        print(f'{building}, {floor}, {room}')
 
     door.building = building
     door.floor = floor
     door.room = room
     door.command = 'command'
-    print(f'publishing to {door.command_topic}')
+    if DEBUG:
+        print(f'publishing to {door.command_topic}')
     #client.publish('edi/user/44e56742/B/3/319', str('i am in'))
     client.publish(door.command_topic, str('open'))
 
@@ -38,7 +43,8 @@ with open('access.csv') as f:
         read_data.append(row)
 to_subscribe = []
 for line in read_data:
-    print(line)
+    if DEBUG:
+        print(line)
     user, building, floor, *rooms = line
     door = Doors()
     door.user = user
