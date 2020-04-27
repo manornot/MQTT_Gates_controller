@@ -25,6 +25,7 @@ def on_message(client, userdata, message):
     door.floor = floor
     door.room = room
     door.command = 'command'
+    print(f'publishing to {door.command_topic}')
     client.publish(door.command_topic, str('open'))
 
 
