@@ -32,7 +32,7 @@ def init(door):
     door.room = 319
     door.floor = 3
     door.building = 'B'
-    door.host = '192.168.0.100'
+    door.host = ''  # '192.168.0.100'
     door.port = 1883
     door.command_topic = 'command'
     door.status_topic = 'status'

@@ -13,7 +13,7 @@ class Doors():
         self.id = str(self.room)+str(building)
         self.__command_topic = f'edi/{building}/{floor}/{room}/{command_topic}'
         self.__status_topic = f'edi/{building}/{floor}/{room}/{status_topic}'
-        self.publish_request = f'edi/{building}/{floor}/{room}/'
+        self.__request_topic = f'edi/{building}/{floor}/{room}/'
         self.userdata = {}
         self.host = host
         self.port = port
@@ -30,6 +30,14 @@ class Doors():
     @command_topic.setter
     def command_topic(self, topic):
         self.__command_topic = f'edi/{self.building}/{self.floor}/{self.room}/{topic}'
+
+    @property
+    def request_topic(self):
+        return self.__request_topic
+
+    @request_topic.setter
+    def request_topic(self, topic):
+        self.__request_topic = f'edi/{self.building}/{self.floor}/{self.room}/{topic}'
 
     @property
     def status_topic(self):
