@@ -37,6 +37,11 @@ class Doors():
 
     @property
     def command_topic(self):
+        #self.__command_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.command}'
+        return self.__command_topic
+
+    @command_topic.setter
+    def command_topic(self):
         self.__command_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.command}'
         return self.__command_topic
 
