@@ -24,9 +24,9 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, message):
     if DEBUG:
-        print(message.payload in userdata.get('door').available_commands)
-    if message.payload in userdata.get('door').available_commands:
-        userdata.get('door').available_commands.get(message.payload)()
+        print(message.payload in userdata.available_commands)
+    if message.payload in userdata.available_commands:
+        userdata.available_commands.get(message.payload)()
 
 
 def init(door):

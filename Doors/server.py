@@ -29,7 +29,7 @@ def on_message(client, userdata, message):
     door.command = 'command'
     print(f'publishing to {door.command_topic}')
     #client.publish('edi/user/44e56742/B/3/319', str('i am in'))
-    #client.publish(door.command_topic, str('open'))
+    client.publish(door.command_topic, str('open'))
 
 
 read_data = []
