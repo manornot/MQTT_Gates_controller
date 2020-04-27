@@ -80,7 +80,7 @@ while True:
     print('Read block 4: 0x{0}'.format(binascii.hexlify(data[:4])))
 
     door.open(uid)
-    uid_old = uid
+    uid_old, uid_new = uid, uid
     while uid_old == uid_new:
         uid_new = pn532.read_passive_target()
         if uid is None:
