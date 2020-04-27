@@ -1,11 +1,3 @@
-# init room
-# init mqtt
-# connect to mqtt
-# init rfid
-# rfid reading
-#   if read_rfid():
-#       send_request()
-
 from edi_doors import Doors
 import binascii
 import sys
@@ -44,7 +36,6 @@ def init(door):
     door.mqtt_client.user_data_set(door)
     door.mqtt_client.on_connect = on_connect
     door.mqtt_client.on_message = on_message
-    #door.mqtt_client.username_pw_set(username='jura', password='qweasdzxc')
     door.init()
 
 
@@ -54,11 +45,6 @@ if DEBUG:
     print(door)
 door.mqtt_client.loop_start()
 
-
-# Setup how the PN532 is connected to the Raspbery Pi/BeagleBone Black.
-# It is recommended to use a software SPI connection with 4 digital GPIO pins.
-
-# Configuration for a Raspberry Pi:
 CS = 8
 MOSI = 10
 MISO = 9

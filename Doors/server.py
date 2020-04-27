@@ -6,11 +6,14 @@ DEBUG = False
 
 
 def on_connect(client, userdata, flags, rc):
-    #print(f'userdata = {userdata}')
+    if DEBUG:
+        print(f'userdata = {userdata}')
     for user in userdata:
-        #print(f'user = {user}')
+        if DEBUG:
+            print(f'user = {user}')
         for door in user.__rooms:
-            #print(f'door = {door}, uuid = {user.user}')
+            if DEBUG:
+                print(f'door = {door}, uuid = {user.user}')
             user.room = door
             user.__user = user.user
             tpk = user.request_topic
@@ -33,7 +36,6 @@ def on_message(client, userdata, message):
     door.command = 'command'
     if DEBUG:
         print(f'publishing to {door.command_topic}')
-    #client.publish('edi/user/44e56742/B/3/319', str('i am in'))
     client.publish(door.command_topic, str('open'))
 
 
@@ -60,5 +62,3 @@ server.user_data_set(to_subscribe)
 server.connect(host='localhost', port=1883)
 
 server.loop_forever()
-
-# print(to_subscribe[0].request_topic)

@@ -5,24 +5,24 @@ DEBUG = False
 
 
 class Doors():
-    def __init__(self, room=None, floor=None,
-                 building=None, host=None, port=None,
-                 command_topic=None, status_topic=None):
+    def __init__(self, room='', floor='',
+                 building='', host='', port='',
+                 command_topic='', status_topic=''):
         self.room = room
         self.floor = floor
         self.building = building
-        self.id = str(self.room)+str(building)
+        self.host = host
+        self.port = port
         self.__command_topic = ''
         self.__status_topic = ''
         self.__request_topic = ''
-        self.userdata = {}
-        self.host = host
-        self.port = port
-        self.mqtt_client = client.Client()
-        self.available_commands = {b'open': self.open}
+        self.userdata = ''
         self.__user = ''
         self.command = ''
         self.status = ''
+        self.id = str(self.room)+str(building)
+        self.mqtt_client = client.Client()
+        self.available_commands = {b'open': self.open}
 
     def request_open(self, tag):
         if DEBUG:
@@ -48,11 +48,6 @@ class Doors():
         self.__command_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.command}'
         return self.__command_topic
 
-    # @command_topic.setter
-    # def command_topic(self):
-    #    self.__command_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.command}'
-    #    return self.__command_topic
-
     @property
     def status_topic(self):
         self.__status_topic = f'edi/{self.building}/{self.floor}/{self.room}/{self.status}'
@@ -71,23 +66,3 @@ class Doors():
     def init(self):
         self.mqtt_client._client_id = f'{self.room}{self.building}'
         self.mqtt_client.connect(host=self.host, port=self.port)
-
-    # clnt.loop_start()
-
-
-# door = Doors(319, 3, 'B', 'vtvm.edi.lv', 1883, 'command', 'status')
-#door = Doors()
-# door.room = 319
-# door.floor = 3
-# door.building = 'B'
-# door.host = '192.168.0.100'
-# door.port = 1883
-# door.command_topic = 'command'
-# door.status_topic = 'status'
-#door.building = 'B'
-#door.floor = 3
-#door.room = 319
-#door.command = 'command'
-#print(f'publishing to {door.command_topic}')
-#client.publish(door.command_topic, str('open'))
-# print(door)
