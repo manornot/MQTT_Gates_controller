@@ -34,8 +34,8 @@ def init(door):
     door.building = 'B'
     door.host = ''  # '192.168.0.100'
     door.port = 1883
-    door.command_topic = 'command'
-    door.status_topic = 'status'
+    door.command = 'command'
+    door.status = 'status'
 
     door.mqtt_client.user_data_set({'door': door})
     door.mqtt_client.on_connect = on_connect
