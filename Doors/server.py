@@ -14,12 +14,11 @@ def on_connect(client, userdata, flags, rc):
             user.__user = user.user
             print(f'{user.request_topic}')
             client.subscribe(user.request_topic)
-    client.publish('edi/user/44e56742/B/3/319', str('i am in'))
 
 
 def on_message(client, userdata, message):
     print(f'topic = {message.topic} payload = {message.payload}')
-    door = Doors
+    door = Doors()
     print('1')
     *_, building, floor, room = message.topic.split('/')
     print('2')
@@ -30,7 +29,8 @@ def on_message(client, userdata, message):
     door.room = room
     door.command = 'command'
     print(f'publishing to {door.command_topic}')
-    client.publish(door.command_topic, str('open'))
+    #client.publish('edi/user/44e56742/B/3/319', str('i am in'))
+    #client.publish(door.command_topic, str('open'))
 
 
 read_data = []
