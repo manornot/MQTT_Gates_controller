@@ -21,6 +21,7 @@ def on_message(client, userdata, message):
     print(f'topic = {message.topic} payload = {message.payload}')
     door = Doors
     *_, building, floor, room = '/'.split(message.topic)
+    print(f'{building}, {floor}, {room}')
     door.building = building
     door.floor = floor
     door.room = room
