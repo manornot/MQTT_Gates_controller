@@ -46,6 +46,7 @@ def init(door):
 
 door = Doors()
 init(door)
+print(door)
 door.mqtt_client.loop_start()
 
 
