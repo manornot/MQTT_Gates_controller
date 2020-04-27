@@ -8,7 +8,7 @@ import sys
 from queue import Queue
 broker = 
 from garage_fsm import garage_gates_FSM
-DEBUG = True
+DEBUG = False
 available_commands = [b'open',b'stop',b'close']
 debug_pins_state = '11111'
 
