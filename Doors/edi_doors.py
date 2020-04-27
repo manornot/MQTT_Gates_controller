@@ -25,7 +25,7 @@ class Doors():
 
     def open(self, tag):
         self.mqtt_client.publish(
-            f'edi/user/{str(tag)}/{self.request_topic}', str('open'))
+            f'edi/user/{str(tag)}/{self.request_topic}/{self.building}/{self.floor}/{self.room}', str('open'))
 
     @property
     def user(self):
