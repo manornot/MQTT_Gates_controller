@@ -36,6 +36,7 @@ def init(door):
     door.port = 1883
     door.command_topic = 'command'
     door.status_topic = 'status'
+    door.request_topic = ''
 
     door.mqtt_client.user_data_set({'door': door})
     door.mqtt_client.on_connect = on_connect
