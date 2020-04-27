@@ -5,14 +5,14 @@ from csv import reader
 
 
 def on_connect(client, userdata, flags, rc):
-    print(f'userdata = {userdata}')
+    #print(f'userdata = {userdata}')
     for user in userdata:
-        print(f'user = {user}')
+        #print(f'user = {user}')
         for door in user.__rooms:
-            print(f'door = {door}, uuid = {user.user}')
+            #print(f'door = {door}, uuid = {user.user}')
             user.room = door
             user.__user = user.user
-            print(f'{user.request_topic}')
+            # print(f'{user.request_topic}')
             client.subscribe(user.request_topic)
 
 
