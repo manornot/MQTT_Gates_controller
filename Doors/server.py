@@ -41,9 +41,10 @@ def on_message(client, userdata, message):
 
 
 read_data = []
-file = "\\access.csv"
-path = os.getcwd()+file
-path = path.replace('\\', '/')
+script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
+rel_path = "access.csv"
+path = os.path.join(script_dir, rel_path)
+print(path)
 with open(path) as f:
     for row in reader(f):
         read_data.append(row)
