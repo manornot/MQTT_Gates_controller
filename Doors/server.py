@@ -1,6 +1,7 @@
 import paho.mqtt.client as clnt
 import paho.mqtt.publish
 from edi_doors import Doors
+import os
 from csv import reader
 DEBUG = False
 
@@ -40,7 +41,10 @@ def on_message(client, userdata, message):
 
 
 read_data = []
-with open('access.csv') as f:
+file = "\\access.csv"
+path = os.getcwd()+file
+path = path.replace('\\', '/')
+with open(path) as f:
     for row in reader(f):
         read_data.append(row)
 to_subscribe = []
