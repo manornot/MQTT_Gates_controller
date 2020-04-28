@@ -2,6 +2,8 @@ from edi_doors import Doors
 import binascii
 import sys
 import Adafruit_PN532 as PN532
+
+
 DEBUG = False
 
 
