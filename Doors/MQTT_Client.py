@@ -21,6 +21,7 @@ class MQTT_Client:
             client_id=f'{self.room}{self.building}')
         if handler is not self.dummyHandler:
             self.mqtt_client.message_callback_add(self.command_topic, handler)
+            logging.debug(f'handler is {handler}')
         self.mqtt_client.connect(host=self.host, port=self.port)
 
     def onConnect(self, client, userdata, flags, rc):
