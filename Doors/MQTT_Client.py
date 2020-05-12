@@ -31,6 +31,7 @@ class MQTT_Client:
 
     def connect(self):
         self.mqtt_client.connect(host=self.host, port=self.port)
+        self.mqtt_client.loop_start()
         logger.debug(f'connecting to  {self.host}')
 
     def on_connect(self, client, userdata, flags, rc):
