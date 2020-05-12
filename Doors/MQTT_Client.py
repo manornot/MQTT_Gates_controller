@@ -22,6 +22,8 @@ class MQTT_Client:
         if handler is not self.dummyHandler:
             self.mqtt_client.message_callback_add(self.command_topic, handler)
             logging.debug(f'handler is {handler}')
+        else:
+            logging.debug(f'handler is {handler}')
         self.mqtt_client.connect(host=self.host, port=self.port)
 
     def onConnect(self, client, userdata, flags, rc):
@@ -47,6 +49,11 @@ class MQTT_Client:
     def command_topic(self):
         self.__command_topic = f'edi/{self.topicBody()}/{self.__command}'
         return self.__command_topic
+
+    @property
+    def handler(self, handler):
+        self.mqtt_client.message_callback_add(self.command_topic, handler)
+        logging.debug(f'handler is set to{handler}')
 
     @property
     def status_topic(self):
