@@ -1,3 +1,7 @@
+import random
+import numpy as np
+
+
 class gpio:
     OUT = 1
     IN = 0
@@ -29,7 +33,7 @@ class Adafruit_PN532:
             pass
 
         def read_passive_target(self):
-            return bytes('0x00000000', 'utf-8')
+            return bytes(str(np.random.rand(10)), 'utf-8')
 
 
 class mfrc522:
