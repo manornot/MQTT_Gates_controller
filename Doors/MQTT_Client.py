@@ -24,6 +24,8 @@ class MQTT_Client:
             logging.debug(f'handler is {handler}')
         else:
             logging.debug(f'handler is {handler}')
+
+    def connect(self):
         self.mqtt_client.connect(host=self.host, port=self.port)
 
     def onConnect(self, client, userdata, flags, rc):

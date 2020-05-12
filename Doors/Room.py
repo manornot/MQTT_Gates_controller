@@ -19,7 +19,7 @@ class Room():
         self.id = str(self.room)+str(building)
         self.mqtt = MQTT_Client(room, floor,
                                 building, host, port,
-                                command_topic, status_topic)
+                                command_topic, status_topic,)
         self.door = Door(actuator_pin=actuator_pin,
                          numbering=pin_numbering,
                          activeState=activeState)
@@ -32,6 +32,7 @@ class Room():
     def routine_start(self):
         self.mqtt.handler = self.door.open
         self.rfid.handler = self.mqtt.request_open
+        self.mqtt.connect()
         while True:
             uid = self.rfid.readUID()
             if uid is not None:
