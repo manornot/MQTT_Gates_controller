@@ -1,6 +1,10 @@
-#import RPi.GPIO as gpio
+import os
 
-from raspberry_pc_debug import gpio
+
+if os.name == 'nt':
+    from raspberry_pc_debug import gpio
+else:
+    import RPi.GPIO as gpio
 
 
 class Relay:
