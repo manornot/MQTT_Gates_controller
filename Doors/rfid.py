@@ -23,15 +23,36 @@ class RFID_Reader:
     def RC522_reader_init(self):
         self.reader = SimpleMFRC522()
 
-    def __init__(self, CS=8, SCLK=11, MOSI=10, MISO=9):
-        self.CS = CS
-        self.MOSI = MOSI
-        self.MISO = MISO
-        self.SCLK = SCLK
-        if PN532:
-            P532_reader_init()
-        elif RC522:
-            RC522_reader_init()
+    def readUID_RC522(self, read):
+        if RC522:
+            @functools.wraps(read)
+            def wrapper(*args):
+                return self.reader.read()
+            return wrapper
+        return read
+
+    def writeBlock_RC522(self, write):
+        if RC522:
+            @functools.wraps(write)
+            def wrapper(*args):
+                return self.reader.write()
+            return wrapper
+        return write
+
+    def readBlock_RC522(self, read):
+        if RC522:
+            @functools.wraps(read)
+            def wrapper(*args):
+                return self.reader.read()
+            return wrapper
+        return read
+
+    def isActive_RC522(self, read):
+        (status, uid) = self.reader.READER.MFRC522_Anticoll()
+        if status != self.reader.READER.MI_OK:
+            return False
+        if status:
+            return True
 
     @isActive_RC522
     def isActive(self):
@@ -52,33 +73,12 @@ class RFID_Reader:
     def readBlock(self, block):
         return self.reader.mifare_classic_read_block(block)
 
-    def readUID_RC522(self, read):
-        if RC522:
-            @functools.wraps(read)
-            def wrapper(*args):
-                return self.reader.read()
-            return wrapper
-        return read
-
-    def writeBlock_RC522(self, read):
-        if RC522:
-            @functools.wraps(read)
-            def wrapper(*args):
-                return self.reader.read()
-            return wrapper
-        return read
-
-    def readBlock_RC522(self, read):
-        if RC522:
-            @functools.wraps(read)
-            def wrapper(*args):
-                return self.reader.read()
-            return wrapper
-        return read
-
-    def isActive_RC522(self, read):
-        (status, uid) = self.reader.READER.MFRC522_Anticoll()
-        if status != self.reader.READER.MI_OK:
-            return False
-        if status:
-            return True
+    def __init__(self, CS=8, SCLK=11, MOSI=10, MISO=9):
+        self.CS = CS
+        self.MOSI = MOSI
+        self.MISO = MISO
+        self.SCLK = SCLK
+        if PN532:
+            P532_reader_init()
+        elif RC522:
+            RC522_reader_init()
