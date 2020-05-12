@@ -1,6 +1,6 @@
 import paho.mqtt.client as client
 import paho.mqtt.publish
-DEBUG = False
+import logging
 
 
 class MQTT_Client:
@@ -27,8 +27,7 @@ class MQTT_Client:
         self.mqtt_client.subscribe(self.command_topic)
 
     def request_open(self, tag):
-        if DEBUG:
-            print(f'publish to edi/user/{str(tag)}/{self.request_topic}')
+        logging.debug(f'publish to edi/user/{str(tag)}/{self.request_topic}')
         self.__user = tag
         self.mqtt_client.publish(self.request_topic, str('open'))
 
