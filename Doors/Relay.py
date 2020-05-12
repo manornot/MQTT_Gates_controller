@@ -16,7 +16,7 @@ class Relay:
         logging.debug(
             f'pin = {pin}, pin_numbering = {pin_numbering}, activeState = {activeState}')
         self.__pin = pin
-        self.__pin_numbering = pin_numbering
+        self.__pin_numbering = gpio.BCM if pin_numbering is 'BCM' else gpio.BOARD
         self.activeState = activeState
         self.off = not self.activeState
         self.on = self.activeState
