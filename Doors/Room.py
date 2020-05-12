@@ -45,6 +45,6 @@ class Room():
                     logging.debug(f'new uid is {uid_new}')
                     if uid is None:
                         break
-                    time.sleep(0.5)
+                    time.sleep(1)
             else:
                 time.sleep(0.5)
