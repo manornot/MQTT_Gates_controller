@@ -1,10 +1,10 @@
 import paho.mqtt.client as client
 import paho.mqtt.publish
 import logging
+logger = logging.getLogger('MQTT')
 
 
 class MQTT_Client:
-    logger = logging.getLogger('MQTT')
 
     def dummyHandler(self):
         assert False, "you need to implement handler by your self"
@@ -65,7 +65,7 @@ class MQTT_Client:
     @handler.setter
     def handler(self, handler):
         self.mqtt_client.message_callback_add(self.command_topic, handler)
-        logging.debug(f'handler is set to{handler}')
+        logger.debug(f'handler is set to{handler}')
 
     @property
     def status_topic(self):
