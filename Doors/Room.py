@@ -3,7 +3,7 @@ from Rfid import RFID_Reader
 import Relay
 from Door import Door
 from MQTT_Client import MQTT_Client
-from main import logger
+import logging
 
 
 class Room():
@@ -35,7 +35,7 @@ class Room():
         while True:
             uid = self.rfid.readUID()
             if uid is not None:
-                logger.debug(f'uid is {uid}')
+                logging.debug(f'uid is {uid}')
                 self.rfid.handler(uid)
                 uid_old, uid_new = uid, uid
                 while uid_old == uid_new:
@@ -43,7 +43,7 @@ class Room():
                     uid_new = self.rfid.readUID()
                     if uid_new is None:
                         uid_new = self.rfid.readUID()
-                    logger.debug(f'new uid is {uid_new}')
+                    logging.debug(f'new uid is {uid_new}')
                     if uid is None:
                         break
                     time.sleep(0.1)
