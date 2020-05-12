@@ -1,7 +1,7 @@
 import paho.mqtt.client as client
 import paho.mqtt.publish
 import logging
-logging.getLogger('mqtt')
+logger = logging.getLogger('mqtt')
 
 
 class MQTT_Client:
@@ -22,23 +22,23 @@ class MQTT_Client:
             client_id=f'{self.room}{self.building}')
         if handler is not self.dummyHandler:
             self.mqtt_client.message_callback_add(self.command_topic, handler)
-            logging.debug(f'handler is {handler}')
+            logger.debug(f'handler is {handler}')
         else:
-            logging.debug(f'handler is {handler}')
+            logger.debug(f'handler is {handler}')
         self.mqtt_client.on_connect = self.onConnect
-        logging.debug(f'{self}')
+        logger.debug(f'{self}')
 
     def connect(self):
         self.mqtt_client.connect(host=self.host, port=self.port)
-        logging.debug(f'connecting to  {self.host}')
+        logger.debug(f'connecting to  {self.host}')
 
     def onConnect(self, client, userdata, flags, rc):
         self.mqtt_client.subscribe(self.command_topic)
-        logging.debug(f'subscribed to {self.command_topic}')
+        logger.debug(f'subscribed to {self.command_topic}')
 
     def request_open(self, tag):
         self.user = tag
-        logging.debug(f'publish to edi/user/{str(tag)}/{self.request_topic}')
+        logger.debug(f'publish to edi/user/{str(tag)}/{self.request_topic}')
         self.mqtt_client.publish(self.request_topic, str('open'))
 
     def topicBody(self):
