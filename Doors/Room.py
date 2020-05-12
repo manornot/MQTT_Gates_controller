@@ -30,7 +30,7 @@ class Room():
                                 SCLK=SCLK)
         self.available_commands = {b'open': self.door.open}
 
-    def command_handler(self, userdata, message):
+    def command_handler(self, client, userdata, message):
         self.available_commands.get(
             message.payload, self.command_error)(message.payload)
 
