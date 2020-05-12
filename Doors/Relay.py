@@ -45,7 +45,9 @@ class Relay:
     def setInActive(self):
         assert self.state in self.states, "initial state is not set"
         logger.debug(f'Setting inactive')
+        logger.debug(f'self.state is self.on is {self.state is self.on}')
         if self.state is self.on:
+
             if self.activeState is Relay.HIGH:
                 self.__setLow()
             else:
