@@ -1,65 +1,84 @@
+import time
 import binascii
-import sys
+import functools
+PN532 = False
+RC522 = True
+if PN532:
+    import Adafruit_PN532 as PN532
+if RC522:
+    from mfrc522 import SimpleMFRC522
 
-import Adafruit_PN532 as PN532
 
+class RFID_Reader:
+    def P532_reader_init(self):
+        self.reader = PN532.PN532(cs=self.CS,
+                                  sclk=self.SCLK,
+                                  mosi=self.MOSI,
+                                  miso=self.MISO)
+        self.reader.begin()
 
-# Setup how the PN532 is connected to the Raspbery Pi/BeagleBone Black.
-# It is recommended to use a software SPI connection with 4 digital GPIO pins.
+        if self.isActive():
+            self.reader.SAM_configuration()
 
-# Configuration for a Raspberry Pi:
-CS = 8
-MOSI = 10
-MISO = 9
-SCLK = 11
+    def RC522_reader_init(self):
+        self.reader = SimpleMFRC522()
 
-# Configuration for a BeagleBone Black:
-# CS   = 'P8_7'
-# MOSI = 'P8_8'
-# MISO = 'P8_9'
-# SCLK = 'P8_10'
+    def __init__(self, CS=8, SCLK=11, MOSI=10, MISO=9):
+        self.CS = CS
+        self.MOSI = MOSI
+        self.MISO = MISO
+        self.SCLK = SCLK
+        if PN532:
+            P532_reader_init()
+        elif RC522:
+            RC522_reader_init()
 
-# Create an instance of the PN532 class.
-pn532 = PN532.PN532(cs=CS, sclk=SCLK, mosi=MOSI, miso=MISO)
+    @isActive_RC522
+    def isActive(self):
+        _, ver, rev, _ = self.reader.get_firmware_version()
+        assert len(ver) > 0, "rfid is dead"
+        if ver:
+            return True
 
-# Call begin to initialize communication with the PN532.  Must be done before
-# any other calls to the PN532!
-pn532.begin()
+    @readUID_RC522
+    def readUID(self):
+        return binascii.hexlify(self.reader.read_passive_target())[2:-1]
 
-# Get the firmware version from the chip and print(it out.)
-ic, ver, rev, support = pn532.get_firmware_version()
-print('Found PN532 with firmware version: {0}.{1}'.format(ver, rev))
+    @writeBlock_RC522
+    def writeBlock(self, block, data):
+        return self.reader.mifare_classic_write_block(block, data)
 
-# Configure PN532 to communicate with MiFare cards.
-pn532.SAM_configuration()
+    @readBlock_RC522
+    def readBlock(self, block):
+        return self.reader.mifare_classic_read_block(block)
 
-# Main loop to detect cards and read a block.
-print('Waiting for MiFare card...')
-while True:
-    # Check if a card is available to read.
-    uid = pn532.read_passive_target()
-    # Try again if no card is available.
-    if uid is None:
-        continue
-    print('Found card with UID: 0x{0}'.format(binascii.hexlify(uid)))
-    # Authenticate block 4 for reading with default key (0xFFFFFFFFFFFF).
-    if not pn532.mifare_classic_authenticate_block(uid, 4, PN532.MIFARE_CMD_AUTH_B,
-                                                   [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]):
-        print('Failed to authenticate block 4!')
-        continue
-    # Read block 4 data.
-    data = pn532.mifare_classic_read_block(4)
-    if data is None:
-        print('Failed to read block 4!')
-        continue
-    # Note that 16 bytes are returned, so only show the first 4 bytes for the block.
-    print('Read block 4: 0x{0}'.format(binascii.hexlify(data[:4])))
-    # Example of writing data to block 4.  This is commented by default to
-    # prevent accidentally writing a card.
-    # Set first 4 bytes of block to 0xFEEDBEEF.
-    # data[0:4] = [0xFE, 0xED, 0xBE, 0xEF]
-    # # Write entire 16 byte block.
-    # pn532.mifare_classic_write_block(4, data)
-    # print('Wrote to block 4, exiting program!')
-    # # Exit the program to prevent continually writing to card.
-    # sys.exit(0)
+    def readUID_RC522(self, read):
+        if RC522:
+            @functools.wraps(read)
+            def wrapper(*args):
+                return self.reader.read()
+            return wrapper
+        return read
+
+    def writeBlock_RC522(self, read):
+        if RC522:
+            @functools.wraps(read)
+            def wrapper(*args):
+                return self.reader.read()
+            return wrapper
+        return read
+
+    def readBlock_RC522(self, read):
+        if RC522:
+            @functools.wraps(read)
+            def wrapper(*args):
+                return self.reader.read()
+            return wrapper
+        return read
+
+    def isActive_RC522(self, read):
+        (status, uid) = self.reader.READER.MFRC522_Anticoll()
+        if status != self.reader.READER.MI_OK:
+            return False
+        if status:
+            return True
