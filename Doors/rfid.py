@@ -1,15 +1,31 @@
 import time
 import binascii
 import functools
+import os
 PN532 = False
 RC522 = True
-if PN532:
-    import Adafruit_PN532 as PN532
-if RC522:
-    from mfrc522 import SimpleMFRC522
+
+if os.name == 'nt':
+    from raspberry_pc_debug import Adafruit_PN532 as PN532
+    from raspberry_pc_debug import SimpleMFRC522
+else:
+    if PN532:
+        import Adafruit_PN532 as PN532
+    if RC522:
+        from mfrc522 import SimpleMFRC522
 
 
 class RFID_Reader:
+    def __init__(self, CS=8, SCLK=11, MOSI=10, MISO=9):
+        self.CS = CS
+        self.MOSI = MOSI
+        self.MISO = MISO
+        self.SCLK = SCLK
+        if PN532:
+            self.P532_reader_init()
+        elif RC522:
+            self.RC522_reader_init()
+
     def P532_reader_init(self):
         self.reader = PN532.PN532(cs=self.CS,
                                   sclk=self.SCLK,
@@ -59,16 +75,6 @@ class RFID_Reader:
     def writeBlock_RC522(self, block, write):
         return self.reader.write()
 
-    def read_RC522(self, block):
+    def readBlock_RC522(self, block):
         *_, data = self.reader.read()
         return data
-
-    def __init__(self, CS=8, SCLK=11, MOSI=10, MISO=9):
-        self.CS = CS
-        self.MOSI = MOSI
-        self.MISO = MISO
-        self.SCLK = SCLK
-        if PN532:
-            P532_reader_init()
-        elif RC522:
-            RC522_reader_init()
