@@ -41,10 +41,13 @@ class Room():
                 self.rfid.handler(uid)
                 uid_old, uid_new = uid, uid
                 while 1:  # uid_old == uid_new:
+
                     uid_new = self.rfid.readUID()
+                    if uid_new is None:
+                        uid_new = self.rfid.readUID()
                     logging.debug(f'new uid is {uid_new}')
                     if uid is None:
                         break
-                    time.sleep(10)
+                    time.sleep(0.1)
             else:
                 time.sleep(0.5)
