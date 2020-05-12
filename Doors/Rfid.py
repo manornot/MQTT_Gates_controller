@@ -2,6 +2,8 @@ import time
 import binascii
 import functools
 import os
+import logging
+logger = logging.getLogger('RFID')
 PN532 = False
 RC522 = True
 
@@ -25,6 +27,8 @@ class RFID_Reader:
             self.P532_reader_init()
         elif RC522:
             self.RC522_reader_init()
+
+        logger.debug(self)
 
     def P532_reader_init(self):
         self.reader = PN532.PN532(cs=self.CS,

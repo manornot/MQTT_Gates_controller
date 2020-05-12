@@ -1,10 +1,11 @@
 import paho.mqtt.client as client
 import paho.mqtt.publish
 import logging
-logger = logging.getLogger('MQTT')
 
 
 class MQTT_Client:
+    logger = logging.getLogger('MQTT')
+
     def dummyHandler(self):
         assert False, "you need to implement handler by your self"
 
