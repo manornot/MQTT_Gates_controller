@@ -20,11 +20,11 @@ class Relay:
         self.activeState = activeState
         self.off = not self.activeState
         self.on = self.activeState
-        self.states = [self.on, self.off]
-        self.state = self.on
         gpio.setwarnings(False)
         gpio.setmode(self.__pin_numbering)
         gpio.setup(self.__pin, gpio.OUT)
+        self.states = [self.on, self.off]
+        self.state = self.getState()
         self.setInActive()
 
     def __setHigh(self):
@@ -50,3 +50,6 @@ class Relay:
                 self.__setLow()
             else:
                 self.__setHigh()
+
+    def getState(self):
+        return self.on if self.activeState ^ gpio.input(self.__pin) else self.off
