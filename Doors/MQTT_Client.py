@@ -51,6 +51,10 @@ class MQTT_Client:
         return self.__command_topic
 
     @property
+    def handler(self):
+        pass
+
+    @handler.setter
     def handler(self, handler):
         self.mqtt_client.message_callback_add(self.command_topic, handler)
         logging.debug(f'handler is set to{handler}')
