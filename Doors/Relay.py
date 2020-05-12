@@ -57,6 +57,8 @@ class Relay:
 
     def getState(self):
         logger.debug(f'pin state = {gpio.input(self.__pin)}')
+        logger.debug(
+            f'self.activeState ^ bool(gpio.input(self.__pin)) = {self.activeState ^ bool(gpio.input(self.__pin))}')
         return self.on if self.activeState ^ bool(gpio.input(self.__pin)) else self.off
 
     def __str__(self):
