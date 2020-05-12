@@ -16,7 +16,7 @@ class Door():
         logger.debug(
             f'actuator_pin = {actuator_pin}, numbering = {numbering}, activeState = {activeState}, openTime = {openTime}')
 
-    def open(self):
+    def open(self, *_):
         logger.debug("opening attempt")
         self.relay.setActive()
         sleep(self.openTime)
