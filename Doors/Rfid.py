@@ -69,12 +69,12 @@ class RFID_Reader:
             return True
 
     def readUID_RC522(self):
-        uid, *_ = self.reader.read()
+        uid, *_ = self.reader.read_no_block()
         return uid
 
     def writeBlock_RC522(self, block, write):
         return self.reader.write()
 
     def readBlock_RC522(self, block):
-        *_, data = self.reader.read()
+        *_, data = self.reader.read_no_block()
         return data
