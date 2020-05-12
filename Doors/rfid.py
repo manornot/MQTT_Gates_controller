@@ -16,62 +16,52 @@ class RFID_Reader:
                                   mosi=self.MOSI,
                                   miso=self.MISO)
         self.reader.begin()
-
+        self.isActive = self.isActive_PN532
+        self.readUID = self.readUID_PN532
+        self.writeBlock = self.writeBlock_PN532
+        self.readBlock = self.readBlock_PN532
         if self.isActive():
             self.reader.SAM_configuration()
 
-    def RC522_reader_init(self):
-        self.reader = SimpleMFRC522()
-
-    def readUID_RC522(self, read):
-        if RC522:
-            @functools.wraps(read)
-            def wrapper(*args):
-                return self.reader.read()
-            return wrapper
-        return read
-
-    def writeBlock_RC522(self, write):
-        if RC522:
-            @functools.wraps(write)
-            def wrapper(*args):
-                return self.reader.write()
-            return wrapper
-        return write
-
-    def readBlock_RC522(self, read):
-        if RC522:
-            @functools.wraps(read)
-            def wrapper(*args):
-                return self.reader.read()
-            return wrapper
-        return read
-
-    def isActive_RC522(self, read):
-        (status, uid) = self.reader.READER.MFRC522_Anticoll()
-        if status != self.reader.READER.MI_OK:
-            return False
-        if status:
-            return True
-
-    @isActive_RC522
-    def isActive(self):
+    def isActive_PN532(self):
         _, ver, rev, _ = self.reader.get_firmware_version()
         assert len(ver) > 0, "rfid is dead"
         if ver:
             return True
 
-    @readUID_RC522
-    def readUID(self):
+    def readUID_PN532(self):
         return binascii.hexlify(self.reader.read_passive_target())[2:-1]
 
-    @writeBlock_RC522
-    def writeBlock(self, block, data):
+    def writeBlock_PN532(self, block, data):
         return self.reader.mifare_classic_write_block(block, data)
 
-    @readBlock_RC522
-    def readBlock(self, block):
+    def readBlock_PN532(self, block):
         return self.reader.mifare_classic_read_block(block)
+
+    def RC522_reader_init(self):
+        self.reader = SimpleMFRC522()
+        self.isActive = self.isActive_RC522
+        self.readUID = self.readUID_RC522
+        self.writeBlock = self.writeBlock_RC522
+        self.readBlock = self.readBlock_RC522
+
+    def isActive_RC522(self):
+        status, *_ = self.reader.READER.MFRC522_Anticoll()
+        if status != self.reader.READER.MI_OK:
+            return False
+        if status:
+            return True
+
+    def readUID_RC522(self):
+        uid, *_ = self.reader.read()
+        return uid
+
+    def writeBlock_RC522(self, block, write):
+        return self.reader.write()
+
+    def read_RC522(self, block):
+        *_, data = self.reader.read()
+        return data
 
     def __init__(self, CS=8, SCLK=11, MOSI=10, MISO=9):
         self.CS = CS
