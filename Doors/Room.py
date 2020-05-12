@@ -44,6 +44,6 @@ class Room():
                     uid_new = self.rfid.readUID()
                     if uid is None:
                         break
-                    time.sleep(0.1)
+                    time.sleep(0.5)
             else:
                 time.sleep(0.5)
