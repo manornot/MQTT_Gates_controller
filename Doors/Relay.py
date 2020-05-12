@@ -1,6 +1,6 @@
 import os
 import logging
-
+logger = logging.getLogger('Relay')
 
 if os.name == 'nt':
     from raspberry_pc_debug import gpio
@@ -13,7 +13,7 @@ class Relay:
     LOW = False
 
     def __init__(self, pin, pin_numbering, activeState):
-        logging.debug(
+        logger.debug(
             f'pin = {pin}, pin_numbering = {pin_numbering}, activeState = {activeState}')
         self.__pin = pin
         self.__pin_numbering = gpio.BCM if pin_numbering is 'BCM' else gpio.BOARD
@@ -22,6 +22,7 @@ class Relay:
         self.on = self.activeState
         self.states = [self.on, self.off]
         self.state = self.off
+        gpio.setwarning(False)
         gpio.setmode(self.__pin_numbering)
         gpio.setup(self.__pin, gpio.OUT)
 
