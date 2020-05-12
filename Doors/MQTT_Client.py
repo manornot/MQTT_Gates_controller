@@ -34,6 +34,7 @@ class MQTT_Client:
         logger.debug(f'connecting to  {self.host}')
 
     def onConnect(self, client, userdata, flags, rc):
+        logging.debug(f'entered {__name__}')
         client.subscribe(self.command_topic)
         logger.debug(f'subscribed to {self.command_topic}')
 
