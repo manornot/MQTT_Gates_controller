@@ -25,6 +25,7 @@ class Relay:
         gpio.setwarnings(False)
         gpio.setmode(self.__pin_numbering)
         gpio.setup(self.__pin, gpio.OUT)
+        self.setInActive()
 
     def __setHigh(self):
         gpio.output(self.__pin, gpio.HIGH)
@@ -34,6 +35,7 @@ class Relay:
 
     def setActive(self):
         assert self.state in self.states, "initial state is not set"
+        logger.debug(f'Setting active')
         if self.state is self.off:
             if self.activeState is Relay.HIGH:
                 self.__setHigh()
@@ -42,6 +44,7 @@ class Relay:
 
     def setInActive(self):
         assert self.state in self.states, "initial state is not set"
+        logger.debug(f'Setting inactive')
         if self.state is self.on:
             if self.activeState is Relay.HIGH:
                 self.__setLow()
