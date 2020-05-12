@@ -52,4 +52,5 @@ class Relay:
                 self.__setHigh()
 
     def getState(self):
-        return self.on if self.activeState ^ gpio.input(self.__pin) else self.off
+        logger.debug(f'pin state = {gpio.input(self.__pin)}')
+        return self.on if self.activeState ^ bool(gpio.input(self.__pin)) else self.off
