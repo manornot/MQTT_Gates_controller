@@ -40,7 +40,7 @@ class Room():
                 logging.debug(f'uid is {uid}')
                 self.rfid.handler(uid)
                 uid_old, uid_new = uid, uid
-                while uid_old == uid_new:
+                while 1:  # uid_old == uid_new:
                     uid_new = self.rfid.readUID()
                     logging.debug(f'new uid is {uid_new}')
                     if uid is None:
