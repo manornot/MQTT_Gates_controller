@@ -29,10 +29,11 @@ class MQTT_Client:
 
     def connect(self):
         self.mqtt_client.connect(host=self.host, port=self.port)
+        logging.debug(f'connecting to  {self.host}')
 
     def onConnect(self, client, userdata, flags, rc):
         self.mqtt_client.subscribe(self.command_topic)
-        logging.debug(f'subscribed to {command_topic}')
+        logging.debug(f'subscribed to {self.command_topic}')
 
     def request_open(self, tag):
         self.user = tag
