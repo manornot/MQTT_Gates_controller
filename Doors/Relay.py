@@ -22,7 +22,7 @@ class Relay:
         self.on = self.activeState
         self.states = [self.on, self.off]
         self.state = self.off
-        gpio.setwarning(False)
+        gpio.setwarnings(False)
         gpio.setmode(self.__pin_numbering)
         gpio.setup(self.__pin, gpio.OUT)
 
