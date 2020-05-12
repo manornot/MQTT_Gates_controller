@@ -41,6 +41,7 @@ class Relay:
                 self.__setHigh()
             else:
                 self.__setLow()
+        self.state = self.getState()
 
     def setInActive(self):
         assert self.state in self.states, "initial state is not set"
@@ -50,6 +51,7 @@ class Relay:
                 self.__setLow()
             else:
                 self.__setHigh()
+        self.state = self.getState()
 
     def getState(self):
         logger.debug(f'pin state = {gpio.input(self.__pin)}')
