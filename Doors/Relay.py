@@ -1,4 +1,5 @@
 import os
+import logging
 
 
 if os.name == 'nt':
@@ -12,6 +13,8 @@ class Relay:
     LOW = False
 
     def __init__(self, pin, pin_numbering, activeState):
+        logging.debug(
+            f'pin = {pin}, pin_numbering = {pin_numbering}, activeState = {activeState}')
         self.__pin = pin
         self.__pin_numbering = pin_numbering
         self.activeState = activeState
@@ -19,7 +22,7 @@ class Relay:
         self.on = self.activeState
         self.states = [self.on, self.off]
         self.state = self.off
-        gpio.setmode(pin_numbering)
+        gpio.setmode(self.__pin_numbering)
         gpio.setup(self.__pin, gpio.OUT)
 
     def __setHigh(self):
