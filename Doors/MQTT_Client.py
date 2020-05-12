@@ -34,7 +34,7 @@ class MQTT_Client:
         logger.debug(f'connecting to  {self.host}')
 
     def onConnect(self, client, userdata, flags, rc):
-        self.mqtt_client.subscribe(self.command_topic)
+        client.subscribe(self.command_topic)
         logger.debug(f'subscribed to {self.command_topic}')
 
     def request_open(self, tag):
