@@ -30,8 +30,15 @@ class Room():
                                 SCLK=SCLK)
         self.available_commands = {b'open': self.door.open}
 
+    def command_handler(self, userdata, message):
+        self.available_commands.get(
+            message.payload, self.command_error)(message.payload)
+
+    def command_error(self, command):
+        logger.error(f'got corrupted command  - {command}')
+
     def routine_start(self):
-        self.mqtt.handler = self.door.open
+        self.mqtt.handler = self.command_handler
         self.rfid.handler = self.mqtt.request_open
         self.mqtt.connect()
         while True:
