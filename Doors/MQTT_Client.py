@@ -27,8 +27,8 @@ class MQTT_Client:
         self.mqtt_client.subscribe(self.command_topic)
 
     def request_open(self, tag):
+        self.user = tag
         logging.debug(f'publish to edi/user/{str(tag)}/{self.request_topic}')
-        self.__user = tag
         self.mqtt_client.publish(self.request_topic, str('open'))
 
     def topicBody(self):
@@ -53,7 +53,7 @@ class MQTT_Client:
 
     @property
     def request_topic(self):
-        self.__request_topic = f'edi/user/{self.__user}/{self.topicBody()}'
+        self.__request_topic = f'edi/user/{self.user}/{self.topicBody()}'
         return self.__request_topic
 
     def __str__(self):
