@@ -5,7 +5,6 @@ from Door import Door
 from MQTT_Client import MQTT_Client
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
 
 
 class Room():
@@ -40,7 +39,7 @@ class Room():
                 logging.debug(f'uid is {uid}')
                 self.rfid.handler(uid)
                 uid_old, uid_new = uid, uid
-                while 1:  # uid_old == uid_new:
+                while uid_old == uid_new:
 
                     uid_new = self.rfid.readUID()
                     if uid_new is None:
