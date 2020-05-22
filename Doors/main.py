@@ -1,16 +1,17 @@
-try:
-    from Room import Room
-except:
-    pass
+from Room import Room
 import logging
 DEBUG = True
+path_to_log = 'doors.log'
 
 
 def main():
-    logging.basicConfig(level=logging.DEBUG)
-    if not DEBUG:
-        logging.disable(logging.DEBUG)
-    logging.debug("DEBUG IS EBABLED")
+
+    if DEBUG:
+        logging.basicConfig(filename=path_to_log, level=logging.DEBUG)
+        logging.debug("DEBUG IS EBABLED")
+    else:
+        logging.basicConfig(filename=path_to_log, level=logging.INFO)
+
     Room319 = Room(room=319, floor=3,
                    building='B', host='vtvm.edi.lv', port=1883,
                    command_topic='command', status_topic='status',

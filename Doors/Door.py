@@ -5,7 +5,7 @@ logger = logging.getLogger('Door')
 
 
 class Door():
-    def __init__(self, actuator_pin, numbering, activeState, openTime=10):
+    def __init__(self, actuator_pin, numbering, activeState, openTime=5):
         self.pin = actuator_pin
         self.numbering = numbering
         self.openTime = openTime

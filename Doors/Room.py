@@ -1,12 +1,10 @@
 import time
-try:
-    from Rfid import RFID_Reader
-    import Relay
-    from Door import Door
-    from MQTT_Client import MQTT_Client
-except:
-    pass
+from Rfid import RFID_Reader
+import Relay
+from Door import Door
+from MQTT_Client import MQTT_Client
 import logging
+
 logger = logging.getLogger('Room')
 
 
@@ -34,6 +32,7 @@ class Room():
         self.available_commands = {b'open': self.door.open}
 
     def command_handler(self, client, userdata, message):
+        logger.info(f'received command {message.payload}')
         self.available_commands.get(
             message.payload, self.command_error)(message.payload)
 
@@ -49,6 +48,7 @@ class Room():
             if uid is not None:
                 logger.debug(f'uid is {uid}')
                 self.rfid.handler(uid)
+                logger.info(f'access attempt by {uid}')
                 uid_old, uid_new = uid, uid
                 while uid_old == uid_new:
 
@@ -60,4 +60,4 @@ class Room():
                         break
                     time.sleep(0.1)
             else:
-                time.sleep(0.5)
+                time.sleep(0.1)

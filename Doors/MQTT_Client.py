@@ -27,6 +27,7 @@ class MQTT_Client:
         else:
             logger.debug(f'handler is {handler}')
         self.mqtt_client.on_connect = self.on_connect
+        self.mqtt_client.on_disconnect = self.on_disconnect
         logger.debug(f'{self}')
 
     def connect(self):
@@ -38,6 +39,9 @@ class MQTT_Client:
         logger.debug(f'entered on_connect')
         client.subscribe(self.command_topic)
         logger.debug(f'subscribed to {self.command_topic}')
+
+    def on_disconnect(self, client, userdata, rc):
+        logger.critical(f'AHTUNG! no connection')
 
     def request_open(self, tag):
         self.user = tag
