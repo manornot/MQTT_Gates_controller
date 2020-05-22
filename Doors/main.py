@@ -1,6 +1,7 @@
 from Room import Room
 import logging
-DEBUG = True
+DEBUG = False
+LOG = False
 path_to_log = 'doors.log'
 
 
@@ -9,7 +10,7 @@ def main():
     if DEBUG:
         logging.basicConfig(filename=path_to_log, level=logging.DEBUG)
         logging.debug("DEBUG IS EBABLED")
-    else:
+    elif LOG:
         logging.basicConfig(filename=path_to_log, level=logging.INFO)
 
     Room319 = Room(room=319, floor=3,
