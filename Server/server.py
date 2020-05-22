@@ -35,7 +35,7 @@ def on_message(client, userdata, message):
     door.command = 'command'
     logger.debug(f'publishing to {door.command_topic}')
     logger.info(
-        f'{time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())}: authorised access request to {door} by {message.topic}')
+        f'{time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())}: authorised access request to {door.room}{door.building} by {message.topic}')
     client.publish(door.command_topic, str('open'))
 
 
