@@ -1,4 +1,7 @@
-from Room import Room
+try:
+    from Room import Room
+except:
+    pass
 import logging
 DEBUG = True
 

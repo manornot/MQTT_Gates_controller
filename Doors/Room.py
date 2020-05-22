@@ -1,8 +1,11 @@
 import time
-from Rfid import RFID_Reader
-import Relay
-from Door import Door
-from MQTT_Client import MQTT_Client
+try:
+    from Rfid import RFID_Reader
+    import Relay
+    from Door import Door
+    from MQTT_Client import MQTT_Client
+except:
+    pass
 import logging
 logger = logging.getLogger('Room')
 

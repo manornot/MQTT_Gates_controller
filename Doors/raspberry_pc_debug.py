@@ -16,7 +16,13 @@ class gpio:
     def output(self, *args):
         pass
 
+    def input(self, *args):
+        return 1
+
     def setup(self, *args):
+        pass
+
+    def setwarnings(self, *args):
         pass
 
 

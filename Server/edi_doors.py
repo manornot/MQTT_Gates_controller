@@ -1,7 +1,6 @@
 import paho.mqtt.client as client
 import paho.mqtt.publish
-import RPi.GPIO as gpio
-import time
+import os
 DEBUG = False
 
 
@@ -21,8 +20,6 @@ class Doors():
         self.__user = ''
         self.command = ''
         self.status = ''
-        self.__gpio = ''
-        self.__pin_numbering = ''
         self.id = str(self.room)+str(building)
         self.mqtt_client = client.Client()
         self.available_commands = {b'open': self.open}
@@ -36,27 +33,7 @@ class Doors():
     def open(self):
         if DEBUG:
             print(f'AAAAAAAAAAAAAAAAA i am fcking done')
-        gpio.output(self.__gpio, gpio.HIGH)
-        time.sleep(5)
-        gpio.output(self.__gpio, gpio.LOW)
         pass
-
-    @property
-    def pin(self):
-        return self.__gpio
-
-    @pin.full_setter
-    def pin(self, pin_numbering, pin):
-        gpio.setmode(pin_numbering)
-        self.__gpio = pin
-        self.__pin_numbering = pin_numbering
-        gpio.setup(self.__gpio, gpio.OUT)
-
-    @pin.setter
-    def pin(self, pin):
-        gpio.setmode(self.__pin_numbering)
-        self.__gpio = pin
-        gpio.setup(self.__gpio, gpio.OUT)
 
     @property
     def user(self):

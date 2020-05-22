@@ -1,11 +1,14 @@
 import os
 import logging
 logger = logging.getLogger('Relay')
+try:
 
-if os.name == 'nt':
-    from raspberry_pc_debug import gpio
-else:
-    import RPi.GPIO as gpio
+    if os.name == 'nt':
+        from raspberry_pc_debug import gpio
+    else:
+        import RPi.GPIO as gpio
+except:
+    pass
 
 
 class Relay:
