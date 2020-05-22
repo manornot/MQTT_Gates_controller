@@ -1,7 +1,9 @@
 import paho.mqtt.client as client
 import paho.mqtt.publish
+import logging
 import os
-DEBUG = False
+
+logger = logging.getLogger('requester')
 
 
 class Doors():
@@ -25,14 +27,12 @@ class Doors():
         self.available_commands = {b'open': self.open}
 
     def request_open(self, tag):
-        if DEBUG:
-            print(f'publish to edi/user/{str(tag)}/{self.request_topic}')
+        logger.debug(f'publish to edi/user/{str(tag)}/{self.request_topic}')
         self.__user = tag
         self.mqtt_client.publish(self.request_topic, str('open'))
 
     def open(self):
-        if DEBUG:
-            print(f'AAAAAAAAAAAAAAAAA i am fcking done')
+        logger.debug(f'AAAAAAAAAAAAAAAAA i am fcking done')
         pass
 
     @property
