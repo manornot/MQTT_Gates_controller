@@ -49,7 +49,7 @@ class Room():
                 logger.debug(f'uid is {uid}')
                 self.rfid.handler(uid)
                 logger.info(
-                    f'{time.strftime("%Y-%m-%d %H:% M:%S",time.localtime())} access attempt by {uid}')
+                    f'{time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())} access attempt by {uid}')
                 uid_old, uid_new = uid, uid
                 while uid_old == uid_new:
 
